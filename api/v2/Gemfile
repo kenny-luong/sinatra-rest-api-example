@@ -1,0 +1,12 @@
+source 'https://rubygems.org'
+
+gem 'sinatra'
+gem 'sinatra-contrib'
+gem 'rack'
+gem 'mysql2'
+gem 'sequel'
+gem 'dotenv'
+
+group :development, :test do
+  gem 'rerun'
+end
