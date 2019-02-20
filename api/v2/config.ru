@@ -4,18 +4,11 @@ require 'sinatra'
 require 'sequel'
 require 'dotenv'
 
-Dir.glob('./app/{controllers,models}/*.rb').each { |file| require file }
-
-Dotenv.load('config.env')
+Dir.glob('./app/{controllers,models,processors,storage}/*.rb').each { |file| require file }
 
 configure do
-  $db = Sequel.connect(
-      :adapter  => ENV['ADAPTER'],
-      :user     => ENV['DATABASE_USER'],
-      :host     => ENV['DATABASE_URL'],
-      :database => ENV['DATABASE_NAME'],
-      :password => ENV['DATABASE_PASSWORD']
-    )
+  # $config = "test_config"
+  $processor = ProcessorFactory.new("test_config")
 end
 
 run ApplicationController

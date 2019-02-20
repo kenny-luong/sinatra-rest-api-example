@@ -4,25 +4,24 @@ require 'sinatra/namespace'
 class BookController < ApplicationController
   register Sinatra::Namespace
 
+  def initialize(app = nil, processor = $processor.book_processor)
+    super(app)
+    @processor = processor
+  end
+
   namespace '/api/v1' do
     before do
       content_type 'application/json'
     end
 
     get '/books' do
-      # books = Book.all
-      #
-      # [:title, :isbn, :author].each do |filter|
-      #   books = books.send(filter, params[filter]) if params[filter]
-      # end
-      #
-      # books.map { |book| Book::BookSerializer.new(book) }.to_json
+      @processor.all.to_json
     end
 
     get '/books/:id' do |id|
-      # book = Book.where(id: id).first
-      # halt(404, { message:'Book Not Found'}.to_json) unless book
-      # Book::BookSerializer.new(book).to_json
+      book = @processor.find(id)
+      halt(404, { message:'Book Not Found'}.to_json) unless book
+      book.to_json
     end
 
     post '/books' do

@@ -9,4 +9,5 @@ gem 'dotenv'
 
 group :development, :test do
   gem 'rerun'
+  gem 'pry'
 end
