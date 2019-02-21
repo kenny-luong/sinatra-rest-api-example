@@ -1,0 +1,6 @@
+# /.gitignore
+
+*.env
+config/
+*.DS_Store
+**/*.DS_Store

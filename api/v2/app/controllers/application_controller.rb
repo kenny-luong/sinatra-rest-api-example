@@ -22,5 +22,11 @@ class ApplicationController < Sinatra::Base
     get '/' do
       'Welcome to Booklist!'
     end
+
+    get '/ping' do
+    end
+
+    get '/healthcheck' do
+    end
   end
 end

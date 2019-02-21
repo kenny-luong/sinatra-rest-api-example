@@ -7,7 +7,6 @@ require 'dotenv'
 Dir.glob('./app/{controllers,models,processors,storage}/*.rb').each { |file| require file }
 
 configure do
-  # $config = "test_config"
   $processor = ProcessorFactory.new("test_config")
 end
 
