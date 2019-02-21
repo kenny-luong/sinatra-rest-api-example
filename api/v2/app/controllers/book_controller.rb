@@ -9,7 +9,7 @@ class BookController < ApplicationController
     @processor = processor
   end
 
-  namespace '/api/v1' do
+  namespace '/api/v2' do
     before do
       content_type 'application/json'
     end
@@ -25,14 +25,14 @@ class BookController < ApplicationController
     end
 
     post '/books' do
-      # book = Book.new(json_params)
-      # if book.save
-      #   response.headers['Location'] = "#{base_url}/api/v1/books/#{book.id}"
-      #   status 201
-      # else
-      #   status 422
-      #   body(Book::BookSerializer.new(book).to_json)
-      # end
+      book_id = @processor.create(json_params)
+      if book_id
+        response.headers['Location'] = "#{base_url}/api/v1/books/#{book_id}"
+        status 201
+      else
+        status 422
+        body(json_params)
+      end
     end
 
     patch '/books/:id ' do |id|
@@ -50,12 +50,6 @@ class BookController < ApplicationController
       # book = Book.where(id: id).first
       # book.destroy if book
       # status 204
-    end
-
-    private
-
-    def serialize(book)
-      # Book::BookSerializer.new(book).to_json
     end
   end
 end

@@ -6,7 +6,7 @@ class ApplicationController < Sinatra::Base
 
   helpers do
     def base_url
-      @base_url ||= "#{request.env['rack.url_scheme']}://{request.env['HTTP_HOST']}"
+      @base_url ||= "#{request.env['rack.url_scheme']}://#{request.env['HTTP_HOST']}"
     end
 
     def json_params
@@ -18,7 +18,7 @@ class ApplicationController < Sinatra::Base
     end
   end
 
-  namespace '/api/v1' do
+  namespace '/api/v2' do
     get '/' do
       'Welcome to Booklist!'
     end

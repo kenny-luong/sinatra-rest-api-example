@@ -12,5 +12,6 @@ class BookStorageMysql
   end
 
   def insert(options)
+    @storage.insert(options)
   end
 end

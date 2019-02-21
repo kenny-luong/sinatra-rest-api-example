@@ -12,6 +12,7 @@ class BookProcessor
   end
 
   def create(book_options)
+    @storage.insert(book_options)
   end
 
   def update(book_options)
