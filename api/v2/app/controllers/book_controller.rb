@@ -35,21 +35,18 @@ class BookController < ApplicationController
       end
     end
 
-    patch '/books/:id ' do |id|
-      # book = Book.where(id: id).first
-      # halt(404, { message:'Book Not Found'}.to_json) unless book
-      # if book.update_attributes(json_params)
-      #   Book::BookSerializer.new(book).to_json
-      # else
-      #   status 422
-      #   body Book::BookSerializer.new(book).to_json
-      # end
+    patch '/books/:id' do |id|
+      if @processor.update(id, json_params)
+        @processor.find(id).to_json
+      else
+        status 422
+      end
     end
 
     delete '/books/:id' do |id|
-      # book = Book.where(id: id).first
-      # book.destroy if book
-      # status 204
+      book = @processor.find(id)
+      @processor.destroy(id) if book
+      status 204
     end
   end
 end

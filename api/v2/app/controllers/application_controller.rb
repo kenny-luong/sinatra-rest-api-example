@@ -12,7 +12,7 @@ class ApplicationController < Sinatra::Base
     def json_params
       begin
         JSON.parse(request.body.read)
-      rescue
+      rescue StandardError => e
         halt 400, { message:'Invalid JSON' }.to_json
       end
     end

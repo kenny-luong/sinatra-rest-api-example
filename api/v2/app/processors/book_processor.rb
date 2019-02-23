@@ -15,9 +15,11 @@ class BookProcessor
     @storage.insert(book_options)
   end
 
-  def update(book_options)
+  def update(id, book_options)
+    @storage.update(id, book_options)
   end
 
-  def read(book_options)
+  def destroy(id)
+    @storage.destroy(id)
   end
 end

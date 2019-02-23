@@ -14,4 +14,12 @@ class BookStorageMysql
   def insert(options)
     @storage.insert(options)
   end
+
+  def update(id, options)
+    @storage.where(id: id).update(options)
+  end
+
+  def destroy(id)
+    @storage.where(id: id).delete
+  end
 end
