@@ -1,7 +1,7 @@
 require 'sinatra/base'
 require 'sinatra/namespace'
 
-class BookController < ApplicationController
+class BookController < Sinatra::Base
   register Sinatra::Namespace
 
   def initialize(app = nil, processor = $processor.book_processor)
@@ -9,22 +9,22 @@ class BookController < ApplicationController
     @processor = processor
   end
 
-  namespace '/api/v2' do
+  namespace '/api/v2/books' do
     before do
       content_type 'application/json'
     end
 
-    get '/books' do
+    get '' do
       @processor.all.to_json
     end
 
-    get '/books/:id' do |id|
+    get '/:id' do |id|
       book = @processor.find(id)
       halt(404, { message:'Book Not Found'}.to_json) unless book
       book.to_json
     end
 
-    post '/books' do
+    post '' do
       book_id = @processor.create(json_params)
       if book_id
         response.headers['Location'] = "#{base_url}/api/v1/books/#{book_id}"
@@ -35,7 +35,7 @@ class BookController < ApplicationController
       end
     end
 
-    patch '/books/:id' do |id|
+    patch ':id' do |id|
       if @processor.update(id, json_params)
         @processor.find(id).to_json
       else
@@ -43,7 +43,7 @@ class BookController < ApplicationController
       end
     end
 
-    delete '/books/:id' do |id|
+    delete ':id' do |id|
       book = @processor.find(id)
       @processor.destroy(id) if book
       status 204

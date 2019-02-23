@@ -4,6 +4,11 @@ require 'sinatra/namespace'
 class ApplicationController < Sinatra::Base
   register Sinatra::Namespace
 
+  def initialize(app = nil, processor = $processor.application_processor)
+    super(app)
+    @processor = processor
+  end
+
   helpers do
     def base_url
       @base_url ||= "#{request.env['rack.url_scheme']}://#{request.env['HTTP_HOST']}"
@@ -12,7 +17,7 @@ class ApplicationController < Sinatra::Base
     def json_params
       begin
         JSON.parse(request.body.read)
-      rescue StandardError => e
+      rescue
         halt 400, { message:'Invalid JSON' }.to_json
       end
     end
@@ -24,9 +29,18 @@ class ApplicationController < Sinatra::Base
     end
 
     get '/ping' do
+      status 200
     end
 
     get '/healthcheck' do
+      content_type :json
+      {
+        "db": check_db
+      }.to_json
     end
+  end
+
+  def check_db
+    @processor.healthcheck
   end
 end

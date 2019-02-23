@@ -1,5 +1,5 @@
 class ProcessorFactory
-  attr_reader :book_processor
+  attr_reader :application_processor, :book_processor
   require 'yaml'
 
   def initialize(config)
@@ -18,10 +18,8 @@ class ProcessorFactory
         :database => mysql_creds['database'],
         :password => mysql_creds['password']
     })
-
+    @application_processor = ApplicationProcessor.new(db)
     book_storage = BookStorageMysql.new(db[:books])
-
     @book_processor = BookProcessor.new(book_storage)
-
   end
 end
