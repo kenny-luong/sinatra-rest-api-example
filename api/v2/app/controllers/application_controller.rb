@@ -10,17 +10,6 @@ class ApplicationController < Sinatra::Base
   end
 
   helpers do
-    def base_url
-      @base_url ||= "#{request.env['rack.url_scheme']}://#{request.env['HTTP_HOST']}"
-    end
-
-    def json_params
-      begin
-        JSON.parse(request.body.read)
-      rescue
-        halt 400, { message:'Invalid JSON' }.to_json
-      end
-    end
   end
 
   namespace '/api/v2' do
@@ -38,9 +27,13 @@ class ApplicationController < Sinatra::Base
         "db": check_db
       }.to_json
     end
+
+    def check_db
+      $processor.application_processor.healthcheck
+    end
   end
 
-  def check_db
-    @processor.healthcheck
-  end
+  private
+
+  attr_writer :processor
 end

@@ -49,4 +49,8 @@ class BookController < Sinatra::Base
       status 204
     end
   end
+
+  private
+
+  attr_writer :processor
 end

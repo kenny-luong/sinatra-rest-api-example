@@ -18,8 +18,8 @@ class ProcessorFactory
         :database => mysql_creds['database'],
         :password => mysql_creds['password']
     })
-    @application_processor = ApplicationProcessor.new(db)
     book_storage = BookStorageMysql.new(db[:books])
     @book_processor = BookProcessor.new(book_storage)
+    @application_processor = ApplicationProcessor.new(db)
   end
 end
