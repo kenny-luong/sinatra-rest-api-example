@@ -4,7 +4,7 @@ require 'sinatra/namespace'
 class BookController < Sinatra::Base
   register Sinatra::Namespace
 
-  def initialize(app = nil, processor = $processor.book_processor)
+  def initialize(app = nil, processor)
     super(app)
     @processor = processor
   end

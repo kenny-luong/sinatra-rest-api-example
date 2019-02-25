@@ -4,7 +4,7 @@ require 'sinatra/namespace'
 class ApplicationController < Sinatra::Base
   register Sinatra::Namespace
 
-  def initialize(app = nil, processor = $processor.application_processor)
+  def initialize(app = nil, processor)
     super(app)
     @processor = processor
   end
@@ -23,13 +23,7 @@ class ApplicationController < Sinatra::Base
 
     get '/healthcheck' do
       content_type :json
-      {
-        "db": check_db
-      }.to_json
-    end
-
-    def check_db
-      $processor.application_processor.healthcheck
+      @processor.healthcheck.to_json
     end
   end
 

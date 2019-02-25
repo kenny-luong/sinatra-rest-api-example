@@ -22,4 +22,6 @@ class BookStorageMysql
   def destroy(id)
     @storage.where(id: id).delete
   end
+
+    @storage.test_connection ? "passed" : "failed"
 end
