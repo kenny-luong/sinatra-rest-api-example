@@ -1,11 +1,17 @@
 class ApplicationProcessor
-  def initialize(storage)
-    @storage = storage
+  def initialize(dependencies)
+    @dependencies = dependencies
   end
 
   def healthcheck
-    @storage.test_connection ? "passed" : "failed"
-  rescue
-    "failed"
+    statuses = {}
+    begin
+      @dependencies.each do |name, obj|
+        statuses[name] = obj.healthcheck
+      end
+    rescue
+      "failed"
+    end
+    statuses
   end
 end
