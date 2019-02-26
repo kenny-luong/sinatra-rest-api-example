@@ -6,8 +6,8 @@ class ApplicationProcessor
   def healthcheck
     statuses = {}
     begin
-      @dependencies.each do |name, healthcheck|
-        statuses[name] = healthcheck.call
+      @dependencies.each do |name, obj|
+        statuses[name] = obj.healthcheck
       end
     rescue
       "failed"

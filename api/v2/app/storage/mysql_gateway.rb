@@ -13,11 +13,11 @@ class MysqlGateway
 
   def connect(config)
     Sequel.connect({
-      :adapter  => mysql_creds['adapter'],
-      :user     => mysql_creds['username'],
-      :host     => mysql_creds['host'],
-      :database => mysql_creds['database'],
-      :password => mysql_creds['password']
+      :adapter  => config['adapter'],
+      :user     => config['username'],
+      :host     => config['host'],
+      :database => config['database'],
+      :password => config['password']
     })
   end
 end
